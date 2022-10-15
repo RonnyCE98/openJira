@@ -1,9 +1,11 @@
+import { Typography } from '@mui/material'
 import type { NextPage } from 'next'
 
 
 const Home: NextPage = () => {
   return (
-        <h1>Hola Mundo</h1>
+      /**Le decimos que use el color primario de la paleta de colores que se definio en themes */
+        <Typography variant='h1' color='primary'>Hola Mundo</Typography>
   )
 }
 
