@@ -10,7 +10,16 @@ import { createContext } from 'react';
     explícitamente una prop a través de cada nivel del árbol.
     * 
     */
+
+/**
+ * Son la properties de este componente
+ * 
+ */    
 interface ContextProps{sideMenuOpens: boolean;
+    openSideMenu: () => void;
+    closeSideMenu: () => void;
+
+
 }
 
 export const UIContext=createContext({} as ContextProps);
