@@ -1,5 +1,7 @@
+import { Theme, ThemeProvider } from '@mui/material';
 import { FC, PropsWithChildren, useReducer } from 'react';
 import { UIContext, uiReducer } from "./";
+import { darkTheme } from '../../themes/';
 /**
  * El almacena y da informacion
  * 
@@ -13,11 +15,13 @@ import { UIContext, uiReducer } from "./";
  */
 export interface UIState{
     sideMenuOpens: boolean;
+    themeColor: Theme;
 }
 
 const UI_INITIAL_STATE: UIState={
 
-    sideMenuOpens:false
+    sideMenuOpens:false,
+    themeColor:darkTheme
 }
 
 /**
@@ -41,6 +45,17 @@ export const UIProvider:FC <PropsWithChildren>= ({children}) => {
 
   }
 
+  const setDarkTheme=() =>{
+    dispatch({type:'UI-Dark Theme'});
+
+  }
+  const setLightTheme=() =>{
+    dispatch({type:'UI-Light Theme'});
+
+  }
+
+
+
   {/**Le pasamos el state que se creo en uiReducer con su UI_INITIAL_STATE 
       para que React sepa cuando se debe redibujar
   */}
@@ -53,9 +68,17 @@ export const UIProvider:FC <PropsWithChildren>= ({children}) => {
       //Deben estar definidos en el contexto
       openSideMenu,
       closeSideMenu,
+      setDarkTheme,
+      setLightTheme,
     
     }}>
-        {children}
+
+        {/**Como no puede haber nada mas arriba del _app.
+         * Puse el tema en UIProvider ya que esta un nivel por debajo de _app
+         * Y abarca toda las demas paginas
+         * 
+         */}
+        <ThemeProvider theme={state.themeColor}>{children}</ThemeProvider>
 
     </UIContext.Provider>
 

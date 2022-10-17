@@ -1,3 +1,4 @@
+import { Theme } from '@mui/material';
 import { createContext } from 'react';
 	/**
     * Context provee una forma de pasar datos a través del árbol de componentes 
@@ -15,10 +16,14 @@ import { createContext } from 'react';
  * Son la properties de este componente
  * 
  */    
-interface ContextProps{sideMenuOpens: boolean;
+interface ContextProps{
+    themeColor: Theme;
+    
+    sideMenuOpens: boolean;
     openSideMenu: () => void;
     closeSideMenu: () => void;
-
+    setLightTheme: () => void;
+    setDarkTheme: () => void;
 
 }
 

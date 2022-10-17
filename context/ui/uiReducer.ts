@@ -4,6 +4,7 @@
  * Recibe algo y produce algo
  */
 
+import { darkTheme, lightTheme } from "../../themes";
 import { UIState } from "./";
 
 // retorna UIState
@@ -13,6 +14,8 @@ import { UIState } from "./";
 type UiActionType =
 | {type:'UI-Open Sidebar'}
 | {type:'UI-Close Sidebar'}
+| {type:'UI-Dark Theme'}
+| {type:'UI-Light Theme'}
 
 /**
  * El reducer solo recibe esos 2 argumentos y nada mas.
@@ -40,7 +43,18 @@ export const uiReducer = (state:UIState,action:UiActionType):UIState => {
                 ...state,
                 sideMenuOpens:false,
             }    
+        case 'UI-Dark Theme':
+            return{
+                ...state,
+                themeColor:darkTheme,
+            }
+        case 'UI-Light Theme':
+            return{
+                ...state,
+                themeColor:lightTheme,
+            }
     
+
         default:
             return state;
     }
