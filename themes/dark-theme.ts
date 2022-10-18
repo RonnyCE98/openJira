@@ -1,4 +1,4 @@
-import { createTheme } from "@mui/material";
+import { colors, createTheme, Paper } from '@mui/material';
 import { grey, red } from "@mui/material/colors";
 
 /**
@@ -8,6 +8,13 @@ import { grey, red } from "@mui/material/colors";
 export const darkTheme=createTheme({
     palette:{
        mode:'dark',
+       
+
+        primary:{
+            main:'#f3e5f5',
+            light: '#757ce8'
+        },
+
         secondary:{
             main:'#19857b'
         },
@@ -30,7 +37,9 @@ export const darkTheme=createTheme({
                     backgroundColor:'#4a148c'
                 }
             }
-        }
+        },
+        
+        
     
     }
  

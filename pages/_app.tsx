@@ -5,8 +5,9 @@ import '@fontsource/roboto/300.css';
 import '@fontsource/roboto/400.css';
 import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
-import { UIContext, UIProvider } from '../context/ui';
-import { useContext } from 'react';
+import { UIProvider } from '../context/ui';
+import { EntriesProvider } from '../context/entries';
+
 
 
 
@@ -21,8 +22,10 @@ function MyApp({ Component, pageProps }: AppProps) {
     // sepa cuando el sidebar ha sido abierto. Y asi poder cambiar el
     // estado del mismo en cualquier lugar o sea cerrarlo o abrirlo
     <UIProvider> 
+        <EntriesProvider>
           <CssBaseline/>
           <Component {...pageProps} />
+        </EntriesProvider>
      </UIProvider>
 
   ) 

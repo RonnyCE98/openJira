@@ -6,10 +6,11 @@ export const lightTheme=createTheme({
     palette:{
         mode:'light',
         background:{
-         default: grey[300]
+         default: grey[300],
+         
         },
         primary:{
-             main:'#4a148c'
+             main:'#90caf9'
          },
          secondary:{
              main:'#19857b'

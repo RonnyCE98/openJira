@@ -6,7 +6,7 @@ import NightlightRoundOutlinedIcon from '@mui/icons-material/NightlightRoundOutl
 import Brightness7OutlinedIcon from '@mui/icons-material/Brightness7Outlined';
 export const NavBar = () => {
   const {openSideMenu,themeColor,setDarkTheme,setLightTheme} = useContext(UIContext);
-  console.log(themeColor);
+  
 
 
   return (
