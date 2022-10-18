@@ -15,19 +15,19 @@ const Entries_INITIAL_STATE: EntriesState={
     entries: [
         {
             _id:uuidv4(),
-            description:"algo",
+            description:"Pendiente:",
             status:'pending',
             createat:Date.now(),
         },
         {
             _id:uuidv4(),
-            description:"algo2",
+            description:"En progreso:",
             status:'in-progress',
             createat:Date.now()-1000000,
         },
         {
             _id:uuidv4(),
-            description:"algo3",
+            description:"Terminado:",
             status:"finished",
             createat:Date.now()-3000000,
         }
