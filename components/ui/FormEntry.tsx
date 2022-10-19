@@ -1,6 +1,7 @@
 import { Box, Button, TextField } from '@mui/material'
 import SaveOutlinedIcon from '@mui/icons-material/SaveOutlined';
-import React, { ChangeEvent, FC, useState } from 'react'
+import React, { ChangeEvent, FC, useContext, useState } from 'react'
+import { EntriesContext } from '../../context/entries/EntriesContext';
 
 interface Props{
     
@@ -12,6 +13,8 @@ interface Props{
 export const FormEntry:FC<Props> = ({setAddingFalse}) => {
 
     const [inputValue, setInputValue] = useState('')
+    //Obtenemos la funcion del contexto
+    const {addNewEntry} = useContext(EntriesContext);
 
     //Esto para que se valide el texto escrito por el usuario
     //una vez que el cursor ha salido del area del input
@@ -22,6 +25,13 @@ export const FormEntry:FC<Props> = ({setAddingFalse}) => {
     const onTextFieldChanged=(event:ChangeEvent<HTMLInputElement>)=>{
         setInputValue(event.target.value)
         
+
+    }
+
+
+    const onSave=()=>{
+            if(inputValue.length===0) return;
+            addNewEntry(inputValue);
 
     }
 
@@ -50,6 +60,7 @@ export const FormEntry:FC<Props> = ({setAddingFalse}) => {
                             variant='outlined'
                             color='secondary'
                             endIcon={<SaveOutlinedIcon />}
+                            onClick={onSave}
 
                         >
                             Guardar

@@ -39,9 +39,28 @@ const Entries_INITIAL_STATE: EntriesState={
 
 
 export const EntriesProvider:FC <PropsWithChildren>= ({children}) => {
+
+
 const [state, dispatch] = useReducer(entriesReducer, Entries_INITIAL_STATE)
 
+const addNewEntry=(description:string)=>{
+        const newEntry:Entry={
+            _id: uuidv4(),
+            description: description,
+            createat: Date.now(),
+            status: 'pending'
+        }
+
+        //Se pasa la nueva entrada creada al evento [Entry] - Add-Entry
+        //Esto le avisa a react que el estado cambio y por ende debe redibujar
+        dispatch({type:'[Entry] - Add-Entry',payload:newEntry});
+
+}
+
 return (
-<EntriesContext.Provider value={{...state}}>{children}</EntriesContext.Provider>
+<EntriesContext.Provider value={{...state,
+    addNewEntry,
+}}>
+    {children}</EntriesContext.Provider>
 )
 }

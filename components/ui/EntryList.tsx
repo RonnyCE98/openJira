@@ -19,9 +19,9 @@ export const EntryList:FC<Props> = ({status}) => {
   //Devuelve un arreglo con las entradas que tienen el status ilgual
   // al que se recibe por parametro
 
-  //useMemo memoriza las entradas ya que si valor no cambia muy seguido
+  //useMemo memoriza las entradas ya que valor no cambia muy seguido
   // Y solo se vuelven a memorizar si estas cambian
-  const entriesByStatus= useMemo(()=>entries.filter(entries=>entries.status===status),entries);  
+  const entriesByStatus= useMemo(()=>entries.filter(entries=>entries.status===status),[entries]);  
   
   ;
   return (
