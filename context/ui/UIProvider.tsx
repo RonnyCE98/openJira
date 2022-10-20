@@ -16,12 +16,14 @@ import { darkTheme } from '../../themes/';
 export interface UIState{
     sideMenuOpens: boolean;
     themeColor: Theme;
+    isAddingEntry: boolean;
 }
 
 const UI_INITIAL_STATE: UIState={
 
     sideMenuOpens:false,
-    themeColor:darkTheme
+    themeColor:darkTheme,
+    isAddingEntry: false,
 }
 
 /**
@@ -54,6 +56,11 @@ export const UIProvider:FC <PropsWithChildren>= ({children}) => {
 
   }
 
+  const setIsAddingEntry=(valor:boolean) =>{
+    dispatch({type:'UI-Set-Is-Adding-Entry',payload:valor});
+
+  }
+
 
 
   {/**Le pasamos el state que se creo en uiReducer con su UI_INITIAL_STATE 
@@ -70,6 +77,8 @@ export const UIProvider:FC <PropsWithChildren>= ({children}) => {
       closeSideMenu,
       setDarkTheme,
       setLightTheme,
+      setIsAddingEntry,
+      
     
     }}>
 

@@ -2,19 +2,18 @@ import { Box, Button, TextField } from '@mui/material'
 import SaveOutlinedIcon from '@mui/icons-material/SaveOutlined';
 import React, { ChangeEvent, FC, useContext, useState } from 'react'
 import { EntriesContext } from '../../context/entries/EntriesContext';
-
-interface Props{
-    
-     setAddingFalse:()=>void
-
-}
+import { UIContext } from '../../context/ui/UIContext';
 
 
-export const FormEntry:FC<Props> = ({setAddingFalse}) => {
+
+
+export const FormEntry:FC = () => {
 
     const [inputValue, setInputValue] = useState('')
     //Obtenemos la funcion del contexto
     const {addNewEntry} = useContext(EntriesContext);
+
+    const{setIsAddingEntry}= useContext(UIContext);
 
     //Esto para que se valide el texto escrito por el usuario
     //una vez que el cursor ha salido del area del input
@@ -23,7 +22,7 @@ export const FormEntry:FC<Props> = ({setAddingFalse}) => {
     // Entonces  onChange={onTextFieldChanged} va a marcar error y  va indicar el evento que se espera
     //Esta funcion es para ver lo que se esta escribiendo y capturarlo en inputValue
     const onTextFieldChanged=(event:ChangeEvent<HTMLInputElement>)=>{
-        setInputValue(event.target.value)
+        setInputValue(event.target.value);
         
 
     }
@@ -31,7 +30,10 @@ export const FormEntry:FC<Props> = ({setAddingFalse}) => {
 
     const onSave=()=>{
             if(inputValue.length===0) return;
+            //setIsAddingEntry(false);
             addNewEntry(inputValue);
+            setInputValue('');
+            setTouched(false);
 
     }
 
@@ -68,7 +70,7 @@ export const FormEntry:FC<Props> = ({setAddingFalse}) => {
 
                         <Button
                             variant='outlined'
-                            onClick={setAddingFalse}
+                            onClick={ ()=>setIsAddingEntry(false)}
                         >
                             Cancelar
                         </Button>

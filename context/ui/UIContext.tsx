@@ -20,10 +20,12 @@ interface ContextProps{
     themeColor: Theme;
     
     sideMenuOpens: boolean;
+    isAddingEntry: boolean;
     openSideMenu: () => void;
     closeSideMenu: () => void;
     setLightTheme: () => void;
     setDarkTheme: () => void;
+    setIsAddingEntry:(valor:boolean) => void;
 
 }
 

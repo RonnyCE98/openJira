@@ -16,6 +16,7 @@ type UiActionType =
 | {type:'UI-Close Sidebar'}
 | {type:'UI-Dark Theme'}
 | {type:'UI-Light Theme'}
+| {type:'UI-Set-Is-Adding-Entry',payload:boolean}
 
 /**
  * El reducer solo recibe esos 2 argumentos y nada mas.
@@ -52,6 +53,13 @@ export const uiReducer = (state:UIState,action:UiActionType):UIState => {
             return{
                 ...state,
                 themeColor:lightTheme,
+            }
+
+        case 'UI-Set-Is-Adding-Entry':
+            return{
+                ...state,
+                //Se le da el valor que tenga el payload
+                isAddingEntry:action.payload
             }
     
 
