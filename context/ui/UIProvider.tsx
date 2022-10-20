@@ -17,6 +17,7 @@ export interface UIState{
     sideMenuOpens: boolean;
     themeColor: Theme;
     isAddingEntry: boolean;
+    isDragging:boolean;
 }
 
 const UI_INITIAL_STATE: UIState={
@@ -24,6 +25,7 @@ const UI_INITIAL_STATE: UIState={
     sideMenuOpens:false,
     themeColor:darkTheme,
     isAddingEntry: false,
+    isDragging:false
 }
 
 /**
@@ -61,6 +63,16 @@ export const UIProvider:FC <PropsWithChildren>= ({children}) => {
 
   }
 
+  const startDragging=()=>{
+    dispatch({type:"UI-Start-Dragging"});
+
+  }
+
+  const endDragging=()=>{
+    dispatch({type:"UI-End-Dragging"});
+    
+  }
+
 
 
   {/**Le pasamos el state que se creo en uiReducer con su UI_INITIAL_STATE 
@@ -78,6 +90,8 @@ export const UIProvider:FC <PropsWithChildren>= ({children}) => {
       setDarkTheme,
       setLightTheme,
       setIsAddingEntry,
+      startDragging,
+      endDragging
       
     
     }}>

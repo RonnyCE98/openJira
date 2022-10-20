@@ -17,6 +17,8 @@ type UiActionType =
 | {type:'UI-Dark Theme'}
 | {type:'UI-Light Theme'}
 | {type:'UI-Set-Is-Adding-Entry',payload:boolean}
+| {type:'UI-Start-Dragging'}
+| {type:'UI-End-Dragging'}
 
 /**
  * El reducer solo recibe esos 2 argumentos y nada mas.
@@ -61,7 +63,20 @@ export const uiReducer = (state:UIState,action:UiActionType):UIState => {
                 //Se le da el valor que tenga el payload
                 isAddingEntry:action.payload
             }
-    
+        case 'UI-Start-Dragging':
+            return{
+                ...state,
+                isDragging:true
+               
+            }
+
+        case "UI-End-Dragging":
+            return{
+                ...state,
+                isDragging:false
+                
+            }
+        
 
         default:
             return state;

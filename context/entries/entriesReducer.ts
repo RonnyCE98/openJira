@@ -14,6 +14,7 @@ import { EntriesState } from './';
  */
 type EntriesActionType = 
    | { type: '[Entry] - Add-Entry',payload:Entry } 
+   | { type: '[Entry]-Entry-Updated',payload:Entry } 
 
 
 export const entriesReducer = ( state: EntriesState, action: EntriesActionType ): EntriesState => {
@@ -28,6 +29,21 @@ export const entriesReducer = ( state: EntriesState, action: EntriesActionType )
             entries:[...state.entries,action.payload]
 
           }
+      case '[Entry]-Entry-Updated':
+      return {
+         ...state,
+         entries:state.entries.map(entry=>{
+               //Se actualiza si la entry es igual a la que le estoy haciedno drag and drop
+               if(entry._id===action.payload._id){
+                  entry.status= action.payload.status
+                  entry.description=action.payload.description
+               }
+               return entry
+         })
+
+         }
+
+         
 
        default:
           return state;

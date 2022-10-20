@@ -18,7 +18,7 @@ import { createContext } from 'react';
  */    
 interface ContextProps{
     themeColor: Theme;
-    
+    isDragging: boolean;
     sideMenuOpens: boolean;
     isAddingEntry: boolean;
     openSideMenu: () => void;
@@ -26,6 +26,8 @@ interface ContextProps{
     setLightTheme: () => void;
     setDarkTheme: () => void;
     setIsAddingEntry:(valor:boolean) => void;
+    startDragging: () => void;
+    endDragging: () => void;
 
 }
 
