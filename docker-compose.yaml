@@ -1,0 +1,15 @@
+version: "3.7"
+services:
+  entriesDB:
+    image: mongo:4.4.17
+    container_name: entries-database
+    ports:
+      - 27017:27017
+    volumes:
+      - mongodb:/data/db
+
+
+
+volumes:
+  # default dir on Ubuntu: /var/lib/docker/volumes
+  mongodb:
