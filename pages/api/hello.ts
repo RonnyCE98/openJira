@@ -5,6 +5,8 @@ type Data = {
   name: string
 }
 
+
+//el 201 es relacionado a que se creo algo en el backend
 export default function handler(
   req: NextApiRequest,
   res: NextApiResponse<Data>
