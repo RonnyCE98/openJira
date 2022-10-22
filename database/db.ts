@@ -48,11 +48,16 @@ export const connectDB=async ()=>{
 
 export const disconnectDB=async ()=>{
     //ya estoy desconectado
-    if(mongoConnection.isConnected!==0) return;
+    if(mongoConnection.isConnected!==0) {
+        await mongoose.disconnect();
+        console.log("desconectado de la db")
 
 
-    await mongoose.disconnect();
-    console.log("desconectado de la db")
+    }else{
+       //Si es igual a cero ya estoy desconectado
+        return;
+    }
+  
 
 
 }
