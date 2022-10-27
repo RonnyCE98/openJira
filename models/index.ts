@@ -1,1 +1,1 @@
-export {default as EntryModelDB } from "./Entry";
+export {default as EntryModelDB, type IEntry } from "./Entry";

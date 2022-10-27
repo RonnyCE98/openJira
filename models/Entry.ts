@@ -3,7 +3,7 @@ import { Entry } from '../interfaces';
 
 //Para obtenga las mismas propiededaes de Entry
 // Y se pude aniadir nuevas propiedades a IEntry
-interface IEntry extends Entry{
+export interface IEntry extends Entry{
 }
 
 export enum Status {
@@ -15,7 +15,7 @@ export enum Status {
 //Se define las propiedades que los documentos van a tener
 const entrySchema = new Schema({
     description:{type:String,require:true},
-    createat:{type:Number},
+    createdAt:{type:Number},
     status:{
         type: String,
         enum:Status
