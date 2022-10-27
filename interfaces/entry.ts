@@ -8,4 +8,4 @@ export interface Entry{
 }
 
 /**Se usa type para definir un tipo de datos */
-export type EntryStatus = 'pending' | 'in-progress'|'finished';
+export type EntryStatus = "pending" | "in-progress"|"finished";

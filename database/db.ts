@@ -18,32 +18,32 @@ const mongoConnection={
 
 }
 
-export const connectDB=async ()=>{
-
+export const connectDB= async()=>{
+   
  
     if(mongoConnection.isConnected===1){
-        console.log("Ya estamos conectados");
-        return;
+         console.log(await "Ya estamos conectados");
+        return mongoConnection.isConnected;
     }
 
     if(mongoose.connections.length>0){
         mongoConnection.isConnected=mongoose.connections[0].readyState;
         if(mongoConnection.isConnected===1){
             //estamos reutilizando una conexion anterior
-            return;
+            return mongoConnection.isConnected;
 
         }
 
-        //Si no es uno nos desconectamos
+        //Si no es 1 nos desconectamos
         await mongoose.disconnect();
 
     }
 
     // espera a que se haga la conexion
-    await mongoose.connect(process.env.MONGO_DB || " ") ;
+    await mongoose.connect(process.env.MONGO_DB|| " ") ;
     mongoConnection.isConnected=1;
    
-    console.log("Conenctando a MongoDB",process.env.MONGO_DB);
+    console.log( "Conenctando a MongoDB",process.env.MONGO_DB);
 
 
     
@@ -51,6 +51,13 @@ export const connectDB=async ()=>{
 
 
 export const disconnectDB=async ()=>{
+    if(process.env.NODE_ENV==="development"){
+        return ;
+
+    }
+
+
+
     //ya estoy desconectado
     if(mongoConnection.isConnected!==0) {
         await mongoose.disconnect();
