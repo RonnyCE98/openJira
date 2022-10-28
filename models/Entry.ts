@@ -1,6 +1,9 @@
 import mongoose,{Model,Schema} from 'mongoose';
 import { Entry } from '../interfaces';
 
+// mongoose rechaza toda la informacion que no esta especificada en el modelo
+
+
 //Para obtenga las mismas propiededaes de Entry
 // Y se pude aniadir nuevas propiedades a IEntry
 export interface IEntry extends Entry{
@@ -18,7 +21,8 @@ const entrySchema = new Schema({
     createdAt:{type:Number},
     status:{
         type: String,
-        enum:Status
+        enum:Status,
+        default:'pending'
     }
 });
 

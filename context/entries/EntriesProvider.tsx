@@ -17,9 +17,7 @@ const Entries_INITIAL_STATE: EntriesState={
 
 }
 
-interface EntriesData{
-    dataEntries: Entry[];
-}
+
 
 
 
@@ -49,8 +47,10 @@ const updateEntry=(entry:Entry)=>{
 
 //Obtenemos las entradas que estan en la base de datos
 const refreshEntries= async()=>{
-    const {data}= entriesApi.get<Entry[]>('/entries');
-    dispatch({type:"[Entry]-Refresh-Data",payload:dataEntries});
+        //Como es una funcion asincrona se debe usar await    
+      const {data}= await entriesApi.get<Entry[]>('/entries')
+    
+    dispatch({type:"[Entry]-Refresh-Data",payload:data});
 
 }
 
