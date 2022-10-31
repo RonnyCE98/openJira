@@ -26,17 +26,23 @@ export const EntriesProvider:FC <PropsWithChildren>= ({children}) => {
 
 const [state, dispatch] = useReducer(entriesReducer, Entries_INITIAL_STATE)
 
-const addNewEntry=(description:string)=>{
-        const newEntry:Entry={
+const addNewEntry= async (description:string)=>{
+        /*const newEntry:Entry={
             _id: uuidv4(),
             description: description,
             createdAt: Date.now(),
             status: 'pending'
-        }
+        }*/
+
+        //En esta linea se lleva acabo la insercion. Este metodo llama al post
+        //creado en api/entries/index. E inserta la entry.
+        //Y si la entrada fue insertada con exito este la devuelve
+        //para mostrala en pantalla
+        const {data} = await entriesApi.post<Entry>('/entries',{description: description}) 
 
         //Se pasa la nueva entrada creada al evento [Entry] - Add-Entry
         //Esto le avisa a react que el estado cambio y por ende debe redibujar
-        dispatch({type:'[Entry] - Add-Entry',payload:newEntry});
+        dispatch({type:'[Entry] - Add-Entry',payload:data});
 
 }
 
