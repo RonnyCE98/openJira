@@ -46,8 +46,25 @@ const addNewEntry= async (description:string)=>{
 
 }
 
-const updateEntry=(entry:Entry)=>{
-    dispatch({type:"[Entry]-Entry-Updated",payload:entry});
+//desestructuramos la descripcion, el id y el estatus. Para no pasar todo el objeto
+//En palabras simples: "Pasamos las propiedades que nos interesa del objeto"
+
+const updateEntry= async ({_id,description,status}:Entry)=>{
+
+    try {
+
+        const {data} = await entriesApi.put<Entry>(`/entries/${_id}`,{description,status}) 
+
+
+        dispatch({type:"[Entry]-Entry-Updated",payload:data});
+    } catch (error) {
+        console.log(error)
+    }
+
+
+
+
+ 
 
 }
 

@@ -40,7 +40,7 @@ const updateEnrty=async(req: NextApiRequest,res:NextApiResponse<Data>)=>{
   
   
 
-    try {
+  
         const {id} = req.query;
         await db.connectDB();
       
@@ -56,21 +56,29 @@ const updateEnrty=async(req: NextApiRequest,res:NextApiResponse<Data>)=>{
             status=entryToUpdate.status
 
         } = req.body;
-
-        //Se actualiza los valores de la entrada
+        
+        try {
+     //Se actualiza los valores de la entrada
         // runValidators para que valide que solo se haya insertado valores permitidos
         // new para que retorne la entrada con los valores modificados
         const updatedEntry = await EntryModelDB.findByIdAndUpdate(id,{description,status},{runValidators:true,new:true})
-        
+        await db.disconnectDB();
         //Se coloca ! para decir que la variable nunva va a ser nula
-        return res.status(200).json(updatedEntry!)
-
+        return res.status(200).json(updatedEntry!);
+            
+        } catch (error) {
+            console.log(error);
+            await db.disconnectDB();
+            return res.status(400).json({ message: 'Algo salio mal, revisar la consola' })
+        }
         
-    } catch (error) {
-   
-        return res.status(500).json({ message: 'Algo salio mal, revisar la consola' })
         
-    }
+        
+        
+  
+        
+        
+    
 
     
 
