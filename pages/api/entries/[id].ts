@@ -23,8 +23,8 @@ export default function handler (req: NextApiRequest, res: NextApiResponse<Data>
 
         case 'PUT':
             return updateEnrty(req,res)
-
-       
+        case 'GET':
+            return getEnrty(req,res)
     
         default:
             res.status(400).json({ message: 'Endponint no existe' })
@@ -37,9 +37,6 @@ export default function handler (req: NextApiRequest, res: NextApiResponse<Data>
 }
 
 const updateEnrty=async(req: NextApiRequest,res:NextApiResponse<Data>)=>{
-  
-  
-
   
         const {id} = req.query;
         await db.connectDB();
@@ -72,15 +69,24 @@ const updateEnrty=async(req: NextApiRequest,res:NextApiResponse<Data>)=>{
             return res.status(400).json({ message: 'Algo salio mal, revisar la consola' })
         }
         
-        
-        
-        
+}
+
+
+const getEnrty=async(req: NextApiRequest,res:NextApiResponse<Data>)=>{
   
-        
-        
-    
+    const {id} = req.query;
+    await db.connectDB();
+  
+    const entryToGet= await EntryModelDB.findById(id);
+    if(!entryToGet){
+        await db.disconnectDB();
+        return res.status(400).json({ message: 'No hay entrada con ese ID: ' + id});
+    }
+    await db.disconnectDB();
+    //Se coloca ! para decir que la variable nunva va a ser nula
+    return res.status(200).json(entryToGet!);
 
     
-
-
+  
+    
 }
