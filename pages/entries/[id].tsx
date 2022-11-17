@@ -5,6 +5,7 @@ import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 import { EntryStatus } from '../../interfaces';
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
 import { Status } from '../../models/Entry';
+import { useMemo } from 'react';
 
 const validStatus: EntryStatus[]=['pending','in-progress','finished'];
 
@@ -14,7 +15,7 @@ export const EntryPage = () => {
   const [inputValue, setInputValue] = useState('');
   const [status, setStatus] = useState<EntryStatus>('pending');
   const [touched, setTouched] = useState(false);
-  
+  const isNotValued = useMemo(()=>inputValue.length<=0 && touched,[inputValue,touched])
   const onInputChanged=(event:ChangeEvent<HTMLInputElement>)=>{
          setInputValue(event.target.value); 
   }
@@ -56,6 +57,9 @@ export const EntryPage = () => {
                             label='Actualizar entrada'
                             value={inputValue}
                             onChange={onInputChanged}
+                            helperText={isNotValued && "Ingrese un valor" }
+                            error={isNotValued}
+                            onBlur={()=>setTouched(true)}
                         
                         />
                         {/**Radio */}
@@ -92,6 +96,7 @@ export const EntryPage = () => {
                             variant="contained"
                             fullWidth
                             onClick={onSave}
+                            disabled={inputValue.length<=0}
                         >
                             Save
                         </Button>
