@@ -2,7 +2,7 @@ import { capitalize,Button, Card, CardActions, CardContent, CardHeader, FormCont
 import React, { ChangeEvent,FC,useState } from 'react'
 import { Layout } from '../../components/layouts'
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
-import { EntryStatus } from '../../interfaces';
+import { Entry, EntryStatus } from '../../interfaces';
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
 import { Status } from '../../models/Entry';
 import { useMemo } from 'react';
@@ -11,13 +11,15 @@ import mongoose from 'mongoose';
 const validStatus: EntryStatus[]=['pending','in-progress','finished'];
 
 interface Props{
+    entry:Entry
 
 }
 
-export const EntryPage:FC<Props> = () => {
-  const [inputValue, setInputValue] = useState('');
-  const [status, setStatus] = useState<EntryStatus>('pending');
+export const EntryPage:FC<Props> = ({entry}) => {
+  const [inputValue, setInputValue] = useState(entry.description);
+  const [status, setStatus] = useState<EntryStatus>(entry.status);
   const [touched, setTouched] = useState(false);
+
   const isNotValued = useMemo(()=>inputValue.length<=0 && touched,[inputValue,touched])
   const onInputChanged=(event:ChangeEvent<HTMLInputElement>)=>{
          setInputValue(event.target.value); 
@@ -37,7 +39,7 @@ export const EntryPage:FC<Props> = () => {
   
 
   return (
-    <Layout title='... ....'>
+    <Layout title= {inputValue.substring(0.20) +'.......'}>
         <Grid
             container
             justifyContent='center'
@@ -133,13 +135,18 @@ export const EntryPage:FC<Props> = () => {
 // You should use getServerSideProps when:
 // - Only if you need to pre-render a page whose data must be fetched at request time
 import { GetServerSideProps } from 'next'
+import { dbEntries } from '../../database';
 
 export const getServerSideProps: GetServerSideProps = async ({params}) => {
     const {id}= params as {id:string};
     console.log(id);
     //Obtenemos el id de la url y se valida si es un ID valido en moongose
     //Se le pasa  a "EntryPage" por medio de las props
-    if(!mongoose.isValidObjectId(id)){
+    const entry=await dbEntries.getEntryById(id);
+
+
+
+    if(!entry){
         return{
             redirect:{
                 destination:'/',
@@ -150,7 +157,7 @@ export const getServerSideProps: GetServerSideProps = async ({params}) => {
     }
     return {
         props: {
-            id
+            entry
         }
     }
 }
