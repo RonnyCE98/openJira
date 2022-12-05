@@ -4,10 +4,10 @@ import { Layout } from '../../components/layouts'
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 import { Entry, EntryStatus } from '../../interfaces';
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
-import { Status } from '../../models/Entry';
+
 import { useMemo } from 'react';
-import { GetStaticProps } from 'next'
-import mongoose from 'mongoose';
+
+
 const validStatus: EntryStatus[]=['pending','in-progress','finished'];
 
 interface Props{
@@ -16,8 +16,8 @@ interface Props{
 }
 
 export const EntryPage:FC<Props> = ({entry}) => {
-   const {updateEntry} = useContext(EntriesContext)
-
+   const {updateEntry,deleteEntry} = useContext(EntriesContext)
+   const router = useRouter()
   const [inputValue, setInputValue] = useState(entry.description);
   const [status, setStatus] = useState<EntryStatus>(entry.status);
   const [touched, setTouched] = useState(false);
@@ -30,6 +30,13 @@ export const EntryPage:FC<Props> = ({entry}) => {
   const onStatusChanged=(event:ChangeEvent<HTMLInputElement>)=>{
         setStatus(event.target.value as EntryStatus);
 
+  }
+
+
+  const onDelete=()=>{
+        deleteEntry(entry._id);
+
+        router.push('/');
   }
 
   const onSave=()=>{
@@ -130,11 +137,14 @@ export const EntryPage:FC<Props> = ({entry}) => {
 
 
         </Grid>
-        <IconButton sx={{
+        <IconButton 
+            onClick={onDelete}
+            sx={{
             position: 'fixed',
             bottom: 30,
             right: 30,
-            backgroundColor: 'red'
+            backgroundColor: 'red',
+           
         }}>
             <DeleteOutlineOutlinedIcon/>
 
@@ -152,6 +162,7 @@ export const EntryPage:FC<Props> = ({entry}) => {
 import { GetServerSideProps } from 'next'
 import { dbEntries } from '../../database';
 import { EntriesContext } from '../../context/entries';
+import { useRouter } from 'next/router';
 
 export const getServerSideProps: GetServerSideProps = async ({params}) => {
     const {id}= params as {id:string};

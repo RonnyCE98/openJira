@@ -71,11 +71,6 @@ const updateEntry= async ({_id,description,status}:Entry)=>{
         console.log(error)
     }
 
-
-
-
- 
-
 }
 
 //Obtenemos las entradas que estan en la base de datos
@@ -84,6 +79,19 @@ const refreshEntries= async()=>{
       const {data}= await entriesApi.get<Entry[]>('/entries')
     
     dispatch({type:"[Entry]-Refresh-Data",payload:data});
+
+}
+
+
+const deleteEntry= async(id:string)=> {
+
+    try {
+
+        await entriesApi.delete(`/entries/${id}`) 
+        refreshEntries();
+    } catch (error) {
+        console.log(error)
+    }
 
 }
 
@@ -102,6 +110,8 @@ return (
 <EntriesContext.Provider value={{...state,
     addNewEntry,
     updateEntry,
+    deleteEntry
+    
 }}>
     {children}</EntriesContext.Provider>
 )

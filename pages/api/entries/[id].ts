@@ -25,7 +25,9 @@ export default function handler (req: NextApiRequest, res: NextApiResponse<Data>
             return updateEnrty(req,res)
         case 'GET':
             return getEnrty(req,res)
-    
+
+        case 'DELETE':
+            return deleteEnrty(req,res)
         default:
             res.status(400).json({ message: 'Endponint no existe' })
     }
@@ -84,9 +86,23 @@ const getEnrty=async(req: NextApiRequest,res:NextApiResponse<Data>)=>{
     }
     await db.disconnectDB();
     //Se coloca ! para decir que la variable nunva va a ser nula
-    return res.status(200).json(entryToGet!);
+    return res.status(200).json(entryToGet!); 
+}
 
-    
+const deleteEnrty=async(req: NextApiRequest,res:NextApiResponse<Data>)=>{
   
+    const {id} = req.query;
+
+
+    try {
+        await db.connectDB();
+        await EntryModelDB.findByIdAndDelete(id);
+        await db.disconnectDB();
+        return res.status(200).json({message: 'Entrada con el ID: ' + id + ' borrada'}); 
+    } catch (error) {
+        console.log(error);
+        await db.disconnectDB();
+        return res.status(400).json({ message: 'Algo salio mal, revisar la consola' })
+    }
     
 }
