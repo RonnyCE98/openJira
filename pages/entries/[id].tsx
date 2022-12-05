@@ -1,5 +1,5 @@
 import { capitalize,Button, Card, CardActions, CardContent, CardHeader, FormControl, FormControlLabel, FormLabel, Grid, Radio, RadioGroup, TextField, IconButton } from '@mui/material'
-import React, { ChangeEvent,FC,useState } from 'react'
+import React, { ChangeEvent,FC,useContext,useState } from 'react'
 import { Layout } from '../../components/layouts'
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 import { Entry, EntryStatus } from '../../interfaces';
@@ -16,6 +16,8 @@ interface Props{
 }
 
 export const EntryPage:FC<Props> = ({entry}) => {
+   const {updateEntry} = useContext(EntriesContext)
+
   const [inputValue, setInputValue] = useState(entry.description);
   const [status, setStatus] = useState<EntryStatus>(entry.status);
   const [touched, setTouched] = useState(false);
@@ -31,7 +33,20 @@ export const EntryPage:FC<Props> = ({entry}) => {
   }
 
   const onSave=()=>{
-        console.log(inputValue,status)
+        //Si el input value es igual a cero no actualizo
+        if (inputValue.trim().length===0){
+            return; 
+        }
+
+        const updatedEntry:Entry={
+            ...entry,
+            status:status,
+            description:inputValue
+
+        }
+
+        updateEntry(updatedEntry)
+
     }
 
 
@@ -136,6 +151,7 @@ export const EntryPage:FC<Props> = ({entry}) => {
 // - Only if you need to pre-render a page whose data must be fetched at request time
 import { GetServerSideProps } from 'next'
 import { dbEntries } from '../../database';
+import { EntriesContext } from '../../context/entries';
 
 export const getServerSideProps: GetServerSideProps = async ({params}) => {
     const {id}= params as {id:string};

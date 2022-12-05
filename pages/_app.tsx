@@ -7,7 +7,7 @@ import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
 import { UIProvider } from '../context/ui';
 import { EntriesProvider } from '../context/entries';
-
+import { SnackbarProvider } from 'notistack';
 
 
 
@@ -21,13 +21,14 @@ function MyApp({ Component, pageProps }: AppProps) {
     //Se coloco aqui porque queremos que cualquier componente acceda al context y asi
     // sepa cuando el sidebar ha sido abierto. Y asi poder cambiar el
     // estado del mismo en cualquier lugar o sea cerrarlo o abrirlo
-    <UIProvider> 
-        <EntriesProvider>
-          <CssBaseline/>
-          <Component {...pageProps} />
-        </EntriesProvider>
-     </UIProvider>
-
+    <SnackbarProvider maxSnack={3}>
+        <UIProvider> 
+            <EntriesProvider>
+              <CssBaseline/>
+              <Component {...pageProps} />
+            </EntriesProvider>
+        </UIProvider>
+     </SnackbarProvider>
   ) 
 }
 
